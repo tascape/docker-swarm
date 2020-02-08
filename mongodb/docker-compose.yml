@@ -1,0 +1,31 @@
+version: '3.7'
+
+networks:
+   mongodb:
+
+services:
+  mongodb:
+    image: mongo:4.2
+    hostname: mongodb
+    networks:
+      - mongodb
+    environment:
+      MONGO_INITDB_DATABASE: mongo_db
+    volumes:
+      - ./mongo-entrypoint:/docker-entrypoint-initdb.d
+      - mongodb-volume:/data/db
+      - mongoconfig-volume:/data/configdb
+    ports:
+      - 27017-27019:27017-27019
+
+  mongoclient:
+    image: mongoclient/mongoclient:2.2.0
+    hostname: mongoclient
+    networks:
+      - mongodb
+    ports:
+      - 3000:3000
+
+volumes:
+    mongodb-volume:
+    mongoconfig-volume:
