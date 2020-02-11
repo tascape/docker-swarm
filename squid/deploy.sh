@@ -1,3 +1,4 @@
 #!/bin/bash
 
-docker stack deploy -c docker-compose.yml es
+docker stack deploy -c docker-compose.yml squid
+

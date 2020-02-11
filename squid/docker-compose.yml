@@ -9,10 +9,10 @@ services:
     networks:
       - squid
     ports:
-      - 3128:3128
+      - 13128:3128
     volumes:
+      - ./squid.conf:/etc/squid/squid.conf
       - squid-cache:/var/spool/squid
-    restart: always
 
 volumes:
   squid-cache:
