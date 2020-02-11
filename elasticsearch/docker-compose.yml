@@ -5,16 +5,30 @@ networks:
 
 services:
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.0.0
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.0.1
     networks:
       - elasticsearch
     environment:
       discovery.type: single-node
+      http.cors.allow-origin: http://localhost:1358,http://127.0.0.1:1358
+      http.cors.enabled: "true"
+      http.cors.allow-credentials: "true"
+      http.cors.allow-headers: X-Requested-With,X-Auth-Token,Content-Type,Content-Length,Authorization
     ports:
       - 9200:9200
       - 9300:9300
     volumes:
       - elasticsearch-data:/usr/share/elasticsearch/data
+
+  dejavu:
+    image: appbaseio/dejavu:3.4.0
+    networks:
+      - elasticsearch
+    ports:
+     - 1358:1358
+    links:
+      - elasticsearch
+
 
 volumes:
   elasticsearch-data:
